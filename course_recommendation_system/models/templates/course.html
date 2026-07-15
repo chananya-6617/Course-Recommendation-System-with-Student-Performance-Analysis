@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }} - Course Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        
+        .back-btn:hover {
+            background: #764ba2;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-box {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .similar-course {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .similar-course:hover {
+            transform: translateX(5px);
+            background: #f9f9f9;
+        }
+        
+        .similar-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .similar-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .similarity-score {
+            color: #4caf50;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .student-table th,
+        .student-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .student-table th {
+            background: #f5f5f5;
+            color: #667eea;
+        }
+        
+        .grade-A, .grade-A-minus {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .grade-B-plus, .grade-B, .grade-B-minus {
+            color: #2196f3;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
+        
+        <div class="card">
+            <h2>📖 {{ course.name }}</h2>
+            <div class="course-info">
+                <div class="info-box">
+                    <div class="info-label">Course ID</div>
+                    <div class="info-value">{{ course.course_id }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Department</div>
+                    <div class="info-value">{{ course.department }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Credits</div>
+                    <div class="info-value">{{ course.credits }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Difficulty</div>
+                    <div class="info-value">{{ course.difficulty }}</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Popularity</div>
+                    <div class="info-value">{{ course.popularity }}/100</div>
+                </div>
+            </div>
+            {% if course.prerequisites != "None" %}
+            <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;">
+                <strong>📌 Prerequisites:</strong> {{ course.prerequisites }}
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if similar_courses %}
+        <div class="card">
+            <h2>🔗 Similar Courses</h2>
+            {% for similar in similar_courses %}
+            <a href="/course/{{ similar.course.course_id }}" style="text-decoration: none; color: inherit;">
+                <div class="similar-course">
+                    <div class="similar-title">{{ similar.course.name }}</div>
+                    <div class="similar-details">
+                        {{ similar.course.department }} | {{ similar.course.credits }} credits | {{ similar.course.difficulty }}
+                    </div>
+                    <div class="similarity-score">Similarity: {{ "%.1f"|format(similar.similarity_score * 100) }}%</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="card">
+            <h2>👨‍🎓 Students Enrolled</h2>
+            {% if enrolled_students %}
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Grade</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in enrolled_students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td class="grade-{{ student.grade.replace('+', '-plus').replace('-', '-minus') }}">
+                            {{ student.grade }}
+                        </td>
+                        <td>{{ student.score }}/100</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No students enrolled in this course yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

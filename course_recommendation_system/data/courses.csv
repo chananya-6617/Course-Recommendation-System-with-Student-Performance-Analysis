@@ -1,0 +1,15 @@
+course_id,name,department,credits,prerequisites,difficulty,popularity,youtube_link
+C001,Introduction to Programming,Computer Science,3,None,Beginner,95,https://www.youtube.com/watch?v=zOjov-2OZ0E
+C002,Data Structures,Computer Science,4,C001,Intermediate,88,https://www.youtube.com/watch?v=RBSGKlAvoiM
+C003,Machine Learning,Computer Science,4,"C002,MAT101",Advanced,92,https://www.youtube.com/watch?v=GwIo3gDZCVQ
+C004,Web Development,Computer Science,3,C001,Intermediate,85,https://www.youtube.com/watch?v=Q33KBiDriJY
+C005,Database Systems,Computer Science,3,C002,Intermediate,82,https://www.youtube.com/watch?v=4cWkVbC2bNE
+C006,Linear Algebra,Mathematics,4,None,Intermediate,75,https://www.youtube.com/watch?v=JnTa9XtvmfI
+C007,Statistics,Mathematics,3,MAT101,Intermediate,78,https://www.youtube.com/watch?v=xxpc-HPKN28
+C008,Digital Circuits,Electrical Engineering,4,None,Beginner,70,https://www.youtube.com/watch?v=QZwneRb-zqA
+C009,Robotics,Electrical Engineering,4,"C008,PHY101",Advanced,80,https://www.youtube.com/watch?v=w2itwFJCgFQ
+C010,Artificial Intelligence,Computer Science,4,"C003,MAT101",Advanced,90,https://www.youtube.com/watch?v=JMUxmLyrhSk
+C011,Cloud Computing,Computer Science,4,None,Advanced,95,https://www.youtube.com/watch?v=M988_fsOSWo
+C012,Advanced Web Development,Computer Science,4,C004,Advanced,88,https://www.youtube.com/watch?v=Q33KBiDriJY
+C013,Data Visualization,Data Science,3,C007,Intermediate,85,https://www.youtube.com/watch?v=ua-CiDNNj30
+C014,Mysql,Computer Science,4,C001,Intermediate,75,https://youtu.be/Ofktsne-utM

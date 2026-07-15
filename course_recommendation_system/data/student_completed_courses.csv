@@ -1,0 +1,8 @@
+student_id,course_id,completed_date,test_taken,test_passed
+student_id,course_id,completed_date,test_taken,test_passed
+student_id,course_id,completed_date,test_taken,test_passedS001,C001,2026-04-02,No,No
+S001,C001,2026-04-02,Yes,Yes
+S001,C010,2026-04-05,No,No
+S001,C002,2026-04-05,Yes,Yes
+S001,C003,2026-06-20,Yes,No
+S0019,C003,2026-06-22,Yes,No

@@ -1,0 +1,16 @@
+﻿student_id,name,department,gpa,completed_credits,interests,password
+S001,Alice Johnson,Computer Science,9.5,45,"AI, Python, Data Science",alice123
+S002,Bob Smith,Computer Science,8.0,52,"Web Dev, Java, Database",bob123
+S003,Carol Davis,Mathematics,9.8,38,"Statistics, Python, AI",carol123
+S004,David Brown,Electrical Engineering,8.5,48,"Robotics, C++, Embedded",david123
+S005,Emma Wilson,Computer Science,7.2,42,"Web Dev, JavaScript, UI/UX",emma123
+S006,Frank Miller,Data Science,9.2,35,"Machine Learning, Python, Statistics",frank123
+S007,RIYA,Computer Science,7.0,42,"AI, Web development",riya123
+S008,Sarayu,Electrical Engineering,6.5,32,AI,sarayu123
+S009,Sriansh,Computer Science,8.0,63,"AI, Web development",sriansh123
+S010,John,Computer Science,9.0,46,Python,john123
+s123,mahesh,Computer Science,7.0,52,python,mahesh
+S020,sam,Computer Science,7.0,0,ai,sam123
+S015,Anaa,Computer Science,7.0,0,"AI, Web development",anaa123
+S0018,koushik ,Computer Science,7.0,0,"AI, Web development",Sam6@2006
+S0019,sasha,Computer Science,7.0,0,Python,sasha0202

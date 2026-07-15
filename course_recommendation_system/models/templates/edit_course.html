@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover { background: #764ba2; }
+        .back-btn {
+            background: #666;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>✏️ Edit Course</h1>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Course ID:</label>
+                    <input type="text" value="{{ course.course_id }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Course Name:</label>
+                    <input type="text" name="name" value="{{ course.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Department:</label>
+                    <select name="department">
+                        <option {% if course.department == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                        <option {% if course.department == 'Data Science' %}selected{% endif %}>Data Science</option>
+                        <option {% if course.department == 'Mathematics' %}selected{% endif %}>Mathematics</option>
+                        <option {% if course.department == 'Electrical Engineering' %}selected{% endif %}>Electrical Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Credits:</label>
+                    <input type="number" name="credits" value="{{ course.credits }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Prerequisites:</label>
+                    <input type="text" name="prerequisites" value="{{ course.prerequisites }}">
+                </div>
+                <div class="form-group">
+                    <label>Difficulty:</label>
+                    <select name="difficulty">
+                        <option {% if course.difficulty == 'Beginner' %}selected{% endif %}>Beginner</option>
+                        <option {% if course.difficulty == 'Intermediate' %}selected{% endif %}>Intermediate</option>
+                        <option {% if course.difficulty == 'Advanced' %}selected{% endif %}>Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Popularity (1-100):</label>
+                    <input type="number" name="popularity" value="{{ course.popularity }}" min="1" max="100" required>
+                </div>
+                <button type="submit">Update Course</button>
+                <a href="/admin"><button type="button" class="back-btn">Cancel</button></a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

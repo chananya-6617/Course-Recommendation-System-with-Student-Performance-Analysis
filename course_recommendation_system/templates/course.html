@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }} - Course Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        .back-btn:hover { background: #764ba2; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 { color: #667eea; margin-bottom: 15px; border-left: 4px solid #667eea; padding-left: 15px; }
+        .course-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 15px; }
+        .info-box { padding: 15px; background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border-radius: 8px; text-align: center; }
+        .info-label { font-size: 0.85em; color: #666; text-transform: uppercase; }
+        .info-value { font-size: 1.3em; font-weight: bold; color: #667eea; }
+        .prerequisite-box { margin-top: 15px; padding: 12px; background: #fff3cd; border-radius: 5px; border-left: 4px solid #ffc107; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-top: 10px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .watch-btn { display: inline-block; margin-top: 15px; background: #ff0000; color: white; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .watch-btn:hover { background: #cc0000; }
+        .enroll-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .enroll-btn:hover { transform: scale(1.02); background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%); }
+        .already-enrolled { background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; text-align: center; }
+        .similar-course { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 10px; transition: all 0.2s; cursor: pointer; }
+        .similar-course:hover { transform: translateX(5px); background: #f9f9f9; }
+        .similar-title { font-weight: bold; color: #667eea; margin-bottom: 5px; }
+        .similarity-score { color: #4caf50; font-size: 0.85em; margin-top: 5px; }
+        .student-table { width: 100%; border-collapse: collapse; }
+        .student-table th, .student-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+        .student-table th { background: #f5f5f5; color: #667eea; }
+        .coming-soon { text-align: center; padding: 40px; color: #999; }
+        @media (max-width: 768px) { .course-info { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='/'">← Back to Home</button>
+        
+        <!-- Course Information -->
+        <div class="card">
+            <h2>📖 Course Information</h2>
+            <div class="course-info">
+                <div class="info-box"><div class="info-label">Course ID</div><div class="info-value">{{ course.course_id }}</div></div>
+                <div class="info-box"><div class="info-label">Course Name</div><div class="info-value">{{ course.name }}</div></div>
+                <div class="info-box"><div class="info-label">Department</div><div class="info-value">{{ course.department }}</div></div>
+                <div class="info-box"><div class="info-label">Credits</div><div class="info-value">{{ course.credits }}</div></div>
+                <div class="info-box"><div class="info-label">Difficulty</div><div class="info-value">{{ course.difficulty }}</div></div>
+                <div class="info-box"><div class="info-label">Popularity</div><div class="info-value">{{ course.popularity }}/100</div></div>
+            </div>
+            {% if course.prerequisites != "None" %}
+            <div class="prerequisite-box"><strong>📌 Prerequisites:</strong> {{ course.prerequisites }}</div>
+            {% endif %}
+        </div>
+        
+        <!-- Video Section -->
+        {% if course.youtube_link %}
+        <div class="card">
+            <h2>🎥 Course Video Tutorial</h2>
+            <div class="video-container">
+                <iframe src="{{ course.get_youtube_embed_url() }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="{{ course.youtube_link }}" target="_blank" class="watch-btn">📹 Watch on YouTube</a>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Enrollment Section -->
+        {% if session.student_id %}
+        <div class="card">
+            <h2>📌 Enrollment Status</h2>
+            
+            {% if is_enrolled %}
+                <div class="already-enrolled">
+                    ✅ You are already enrolled in this course!
+                    <br><br>
+                    <a href="/student/{{ session.student_id }}" style="color: #667eea;">📊 Go to your dashboard →</a>
+                </div>
+            {% else %}
+                <form method="POST" action="/enroll_course">
+                    <input type="hidden" name="course_id" value="{{ course.course_id }}">
+                    <button type="submit" class="enroll-btn">📚 Enroll in this Course</button>
+                </form>
+                <p style="margin-top: 10px; color: #666; font-size: 0.85em; text-align: center;">
+                    Once enrolled, you can track your progress, watch videos, and take tests.
+                </p>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="card">
+            <h2>🔐 To Enroll in this Course</h2>
+            <p style="text-align: center; padding: 20px;">
+                Please <a href="/login" style="color: #667eea;">login</a> or 
+                <a href="/register" style="color: #667eea;">register</a> to enroll in this course.
+            </p>
+        </div>
+        {% endif %}
+        
+        <!-- Similar Courses -->
+        {% if similar_courses %}
+        <div class="card">
+            <h2>🔗 Similar Courses You Might Like</h2>
+            {% for similar in similar_courses %}
+            <a href="/course/{{ similar.course.course_id }}" style="text-decoration: none; color: inherit;">
+                <div class="similar-course">
+                    <div class="similar-title">{{ similar.course.name }}</div>
+                    <div class="similar-details">{{ similar.course.department }} | {{ similar.course.credits }} credits</div>
+                    <div class="similarity-score">📊 Match Score: {{ "%.1f"|format(similar.similarity_score * 100) }}%</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- Enrolled Students -->
+        <div class="card">
+            <h2>👨‍🎓 Students Enrolled</h2>
+            {% if enrolled_students %}
+            <table class="student-table">
+                <thead><tr><th>Student Name</th><th>Grade</th><th>Score</th></tr></thead>
+                <tbody>
+                    {% for student in enrolled_students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.grade }}</td>
+                        <td>{{ student.score }}/100</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="coming-soon"><i>👥</i><p>No students enrolled yet. Be the first!</p></div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
